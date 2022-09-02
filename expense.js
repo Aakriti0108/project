@@ -6,7 +6,7 @@ const inputid=document.getElementById('typeid');
 const browseid=document.getElementById('browserid');
 const selectid=document.getElementById('selectid');
 const message=document.querySelector('.mesg');
-button.addEventListener('click',addItem)
+// button.addEventListener('click',addItem)
 
 
   button.addEventListener('mouseover', e => {
@@ -17,17 +17,17 @@ button.addEventListener('click',addItem)
    
   });
 
-function addItem(e)
+function submitform(event)
 {
-    e.preventDefault();
-    if(inputid.value ==='' || browseid.value ==='' || selectid.value ==='')
-    {
+    event.preventDefault();
+    // if(inputid.value ==='' || browseid.value ==='' || selectid.value ==='')
+    // {
         
-        message.innerHTML='please enter details';
-        setTimeout(()=>message.remove(),3000);
-    }
-    else
-    {
+    //     message.innerHTML='please enter details';
+    //     setTimeout(()=>message.remove(),3000);
+    // }
+    // else
+    // {
        
         
    const obj={
@@ -44,7 +44,7 @@ function addItem(e)
      browseid.value='';
     selectid.value='';
 }
-}
+
 function showListofRegisteredUser(user){
     const parentNode = document.getElementById('userlist');
     const createNewUserHtml = `<li id='${user.description}'>${user.description} - ${user.brow} - ${user.sele}

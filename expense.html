@@ -14,7 +14,7 @@
   <header><h1> EXPENSE TRACKER </h1></header>
   <div class="mesg"></div>
   <h2> Let's Start </h2>
-      <form action="" id="my-form" >
+      <form onsubmit="submitform(event)" id="my-form" >
     <div id="set">
          <label> Choose a Expense</label><br>
          <input type="number" id="typeid" name="typeid" required>
@@ -41,10 +41,11 @@
         <br>
       </div>
       <div>
-        <ul id ="userlist"> </ul>
+       
       </div>
 
 </form>
+<ul id ="userlist"> </ul>
 </div>
 <script src="expense.js"></script>
 </body>
