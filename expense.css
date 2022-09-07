@@ -2,7 +2,7 @@
 #outer{
     margin-left: 38%;
     margin-top: 20px;
-    background-color:rgba(235, 239, 245, 0.046);
+    background-color:#dde5e60c;
     width:fit-content;
     height:fit-content;
     padding: 0;
@@ -20,17 +20,19 @@
 }
 #set{
     margin-left: 5%;
-    background-color: rgba(63, 94, 94, 0.057);
+    background-color: rgba(158, 187, 187, 0.057);
     width:fit-content;
     height:fit-content;
     padding: 30px;
 }
 #userlist{
+   border-radius:5%;
     margin-left: 5%;
-    
     width:fit-content;
     height:fit-content;
     padding: 30px;
+    background-color: aquamarine;
+    color:black
 }
 body{
     background-color: black;
@@ -54,12 +56,20 @@ body{
     margin: 5px 0;
   }
   header {
-    background:rgba(0, 0, 0, 0.174);
+    background:rgba(221, 214, 214, 0.174);
     padding: 1rem;
     text-align: center;
+    border-radius: 20%;
   }
   #submit:hover {
     background:pink;
   }
+  #selectedid:hover{
+    background:blanchedalmond;
+  }
+  #typeid:hover{
+    background: blanchedalmond;
+  }
+  
 
   
