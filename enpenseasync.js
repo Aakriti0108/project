@@ -1,4 +1,3 @@
-
 const button=document.getElementById('submit');
 const inputid=document.getElementById('typeid');
 const browseid=document.getElementById('browserid');
@@ -14,7 +13,7 @@ const message=document.querySelector('.mesg');
    
 //   });
 
- function submitform(event)
+ const submitform=async(event)=>
 {
     event.preventDefault();
     
@@ -23,15 +22,17 @@ const message=document.querySelector('.mesg');
           brow:browseid.value,
           sele:selectid.value
    }
-     axios.post("https://crudcrud.com/api/47c5ec778e584b1daab7411a3bea6f06/ExpenseTracker",obj)
-     .then((response)=>{
-        showListofRegisteredUser(response.data)
-        console.log(response)
-     })
-     .catch((err)=>{
+   try{
+     var savedta= await axios.post("https://crudcrud.com/api/48b9b392a0594d96904832226c468e85/ExpenseTracker",obj)
+     
+        showListofRegisteredUser(savedta.data)
+        console.log(savedta.data)
+    
+    }
+     catch{(err)=>{
         document.body.innerHTML=document.body.innerHTML+ "<h4>something went wrong </h4>";
         console.log(err)
-     })
+     }}
    //localStorage.setItem(obj.description,JSON.stringify(obj))
   
 
@@ -42,7 +43,8 @@ const message=document.querySelector('.mesg');
     selectid.value='';
 }
 
-function showListofRegisteredUser(user){
+function showListofRegisteredUser(user)
+{
     const parentNode = document.getElementById('userlist');
     const createNewUserHtml = `<li id='${user._id}'>${user.description} - ${user.brow} - ${user.sele}
                                     <button onclick=deleteUser('${user._id}')>Delete</button>
@@ -54,34 +56,37 @@ function showListofRegisteredUser(user){
 }
 
 
-window.addEventListener('load', (user) => {
+const win= window.addEventListener('load',async(user) => {
     // Object.keys(localStorage).forEach(key => {
     //     const user = JSON.parse(localStorage.getItem(key))
 
-    axios.get("https://crudcrud.com/api/47c5ec778e584b1daab7411a3bea6f06/ExpenseTracker")
-    .then((response)=>{
-        for(let i=0;i<response.data.length;i++){
-        showListofRegisteredUser(response.data[i])
+    
+    try{
+       const getta= await axios.get("https://crudcrud.com/api/48b9b392a0594d96904832226c468e85/ExpenseTracker")
+        for(let i=0;i<getta.data.length;i++){
+        showListofRegisteredUser(getta.data[i])
         }
-    })
-       .catch((err)=>{
+    }
+       catch{(err)=>{
         document.body.innerHTML=document.body.innerHTML+ "<h4>something went wrong </h4>";
         console.log(err);
-       })
+       
+       }}
     })
 
 
 
-function deleteUser(userid) {
-    axios.delete(`https://crudcrud.com/api/47c5ec778e584b1daab7411a3bea6f06/ExpenseTracker/${userid}`)
-    .then((respone)=>{
+const deleteUser=async(userid)=> {
+    try{
+   await axios.delete(`https://crudcrud.com/api/48b9b392a0594d96904832226c468e85/ExpenseTracker/${userid}`)
         removeItemFromScreen(userid)
-    })
-    .catch((err)=>{
+    }
+    catch{(err)=>{
         console.log(err)
-    })
+    }
     //localStorage.removeItem(user)
    
+}
 }
 
 function removeItemFromScreen(userid){
@@ -91,12 +96,8 @@ function removeItemFromScreen(userid){
 }
 function EditUser(description,brow,sele,userid) 
 {
-   
-    inputid.value=description;
+   inputid.value=description;
      browseid.value=brow;
     selectid.value=sele;
     deleteUser(userid);
-}
-
-
-
+}  
