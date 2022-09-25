@@ -14,13 +14,13 @@
   <header><h1> EXPENSE TRACKER </h1></header>
   <div class="mesg"></div>
   <h2> Let's Start </h2>
-      <form onsubmit="submitform(event)" id="my-form" >
+      <form id="my-form" >
     <div id="set">
          <label> Choose a Expense</label><br>
-         <input type="number" id="typeid" name="typeid" required>
+         <input type="number" id="typeid" name="expense" required>
          <br>
          <label> Choose a description </label><br>
-         <input list="browsers" name="browserid"  id="browserid" placeholder="select one any" required ><br>
+         <input list="browsers" name="description"  id="browserid" placeholder="select one any" required ><br>
          <datalist id="browsers" >
            <option value="Party">
            <option value="Fuel">
@@ -28,7 +28,7 @@
          </datalist>
          <br>
          <label> Choose a category </label><br>
-         <select id="selectid" name="selectedid" required >
+         <select id="selectid" name="category" required >
           <option value="" >select any one</option>
             <option value="food">FOOD</option>
             <option value="diesel">diesel</option>
@@ -36,8 +36,9 @@
             <option value=" E-bill">electricity bill</option>
             
           </select><br><br>
-       <button id="submit" >Add Expense</button>
+       <button  type ="submit" id="btnid" >Add Expense</button>
         <br>
+        
         <br>
       </div>
       <div>
@@ -48,7 +49,7 @@
 <ul id ="userlist"> </ul>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
-<script src="enpenseasync.js"></script>
+<script src="expense.js"></script>
 </body>
 
 </html>

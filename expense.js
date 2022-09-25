@@ -1,8 +1,8 @@
 
-const button=document.getElementById('submit');
-const inputid=document.getElementById('typeid');
-const browseid=document.getElementById('browserid');
-const selectid=document.getElementById('selectid');
+const button=document.getElementById('btnid');
+const expense=document.getElementById('typeid');
+const description=document.getElementById('browserid');
+const category=document.getElementById('selectid');
 const message=document.querySelector('.mesg');
 
 
@@ -14,39 +14,42 @@ const message=document.querySelector('.mesg');
    
 //   });
 
- function submitform(event)
-{
-    event.preventDefault();
-    
-   const obj={
-          description:inputid.value,
-          brow:browseid.value,
-          sele:selectid.value
-   }
-     axios.post("https://crudcrud.com/api/47c5ec778e584b1daab7411a3bea6f06/ExpenseTracker",obj)
-     .then((response)=>{
-        showListofRegisteredUser(response.data)
-        console.log(response)
-     })
-     .catch((err)=>{
-        document.body.innerHTML=document.body.innerHTML+ "<h4>something went wrong </h4>";
-        console.log(err)
-     })
-   //localStorage.setItem(obj.description,JSON.stringify(obj))
-  
+ button.addEventListener('click',(e)=>{
+    e.preventDefault();
+    console.log('hello')
+    const obj={
+           expense:expense.value,
+           description:description.value,
+           category:category.value
+    }
+    console.log(obj)
+    axios.post("http://localhost:3000/ExpenseTracker",obj)
+    .then((response)=>{
+       showListofRegisteredUser(response.data.data)
+       console.log(response)
+    })
+    .catch((err)=>{
+       document.body.innerHTML=document.body.innerHTML+ "<h4>something went wrong </h4>";
+       console.log(err)
+    })
+    //localStorage.setItem(obj.description,JSON.stringify(obj))
+   
+ 
+ 
+    //clear fields 
+    expense.value='';
+      description.value='';
+     category.value='';
+ }
+ )
 
-
-   //clear fields 
-   inputid.value='';
-     browseid.value='';
-    selectid.value='';
-}
+   
 
 function showListofRegisteredUser(user){
     const parentNode = document.getElementById('userlist');
-    const createNewUserHtml = `<li id='${user._id}'>${user.description} - ${user.brow} - ${user.sele}
-                                    <button onclick=deleteUser('${user._id}')>Delete</button>
-                                    <button onclick=EditUser('${user.description}','${user.brow}','${user.sele}','${user._id}')>Edit</button>
+    const createNewUserHtml = `<li id='${user.id}'>${user.expense} - ${user.description} - ${user.category}
+                                    <button onclick=deleteUser('${user.id}')>Delete</button>
+                                    <button onclick=EditUser('${user.expense}','${user.description}','${user.category}','${user.id}')>Edit</button>
                                 </li>`
     console.log(createNewUserHtml)
     parentNode.innerHTML = parentNode.innerHTML + createNewUserHtml;
@@ -54,28 +57,41 @@ function showListofRegisteredUser(user){
 }
 
 
-window.addEventListener('load', (user) => {
-    // Object.keys(localStorage).forEach(key => {
-    //     const user = JSON.parse(localStorage.getItem(key))
+window.addEventListener('DOMContentLoaded', (e) => {
+         
+    e.preventDefault();
+        axios.get("http://localhost:3000/userinfo")
+        .then((response)=>{
+            console.log('response')
+            console.log(response)
+            for(let i=0;i<response.data.response.length;i++){
+                let expense =response.data.response[i].expense
+                let description =response.data.response[i].description
+                let category =response.data.response[i].category
+                let id =response.data.response[i].id
+            
+                const parentNode = document.getElementById('userlist');
+    const createNewUserHtml = `<li id='${id}'>${expense} - ${description} - ${category}
+                                    <button onclick=deleteUser('${id}')>Delete</button>
+                                    <button onclick=EditUser('${expense}','${description}','${category}','${id}')>Edit</button>
+                                </li>`
+    //console.log(createNewUserHtml)
+    parentNode.innerHTML = parentNode.innerHTML + createNewUserHtml;
+  //  console.log(parentNode.innerHTML)
+               // console.log();
+            }
+           
+        })
+           .catch((err)=>{
+            console.log(err);
+           })
+        })
 
-    axios.get("https://crudcrud.com/api/47c5ec778e584b1daab7411a3bea6f06/ExpenseTracker")
-    .then((response)=>{
-        for(let i=0;i<response.data.length;i++){
-        showListofRegisteredUser(response.data[i])
-        }
-    })
-       .catch((err)=>{
-        document.body.innerHTML=document.body.innerHTML+ "<h4>something went wrong </h4>";
-        console.log(err);
-       })
-    })
 
-
-
-function deleteUser(userid) {
-    axios.delete(`https://crudcrud.com/api/47c5ec778e584b1daab7411a3bea6f06/ExpenseTracker/${userid}`)
+function deleteUser(id) {
+    axios.delete(`http://localhost:3000/deleteinfo/${id}`)
     .then((respone)=>{
-        removeItemFromScreen(userid)
+        removeItemFromScreen(id)
     })
     .catch((err)=>{
         console.log(err)
@@ -84,19 +100,22 @@ function deleteUser(userid) {
    
 }
 
-function removeItemFromScreen(userid){
+function removeItemFromScreen(id){
     const parentNode = document.getElementById('userlist');
-    const elem = document.getElementById(userid)
+    const elem = document.getElementById(id)
     parentNode.removeChild(elem);
 }
-function EditUser(description,brow,sele,userid) 
+
+function EditUser(expense,description,category,id) 
 {
-   
-    inputid.value=description;
-     browseid.value=brow;
-    selectid.value=sele;
-    deleteUser(userid);
-}
+document.getElementById('typeid').value=expense;
+console.log(expense,description,category,id);
+document.getElementById('browserid').value=description;
+
+document.getElementById('selectid').value=category;
+    deleteUser(id)
+}   
+ 
 
 
 
